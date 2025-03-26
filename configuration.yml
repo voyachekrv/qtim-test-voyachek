@@ -1,0 +1,25 @@
+http:
+  port: 3000
+  prefix: 'api'
+
+database:
+  host: 'localhost'
+  port: 5432
+  username: 'postgres'
+  password: 'postgres'
+  database: 'qtim_test'
+  schema: 'qtim_test'
+  synchronize: false
+  migrations-run: false
+  logging: true
+
+security:
+  user:
+    salt-rounds: 10
+  jwt:
+    secret: 'insecure-99e6f4af-65e7-4a8e-8150-31bf5901c85e'
+    expires-in: '1h'
+
+swagger:
+  path: 'docs'
+  title: 'QTim Test Application API'

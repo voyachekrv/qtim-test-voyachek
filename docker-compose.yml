@@ -1,0 +1,37 @@
+services:
+  postgres:
+    container_name: postgres.qtim
+    hostname: postgres.qtim
+    image: postgres:13.3
+    env_file:
+      - .env
+    volumes:
+      - ./volumes/postgres.qtim:/var/lib/postgresql/data
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+    restart: unless-stopped
+    networks:
+      - qtim-network
+
+  redis:
+    container_name: redis.qtim
+    hostname: redis.qtim
+    image: redis:7.2.4-alpine
+    env_file:
+      - .env
+    volumes:
+      - ./volumes/redis.qtim/redis:/root/redis
+      - ./volumes/redis.qtim/data:/data
+      - ./volumes/redis.qtim/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
+    restart: unless-stopped
+    networks:
+      - qtim-network
+
+networks:
+  qtim-network:
+    name: 'net.qtim'
+    driver: bridge
+
+
