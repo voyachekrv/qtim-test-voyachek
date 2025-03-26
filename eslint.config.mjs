@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    ignores: ['eslint.config.mjs', './src/migrations'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -80,7 +80,7 @@ export default tseslint.config(
       'lines-between-class-members': 'warn',
       'max-classes-per-file': 'off',
       'max-depth': 'off',
-      'max-len': ['warn', { code: 120, ignoreComments: true, ignoreUrls: true, ignoreTemplateLiterals: true, ignoreRegExpLiterals: true }],
+      'max-len': ['warn', { 'code': 120, ignoreComments: true, ignoreUrls: true, ignoreTemplateLiterals: true, ignoreRegExpLiterals: true, ignoreStrings: true }],
       'max-lines': 'off',
       'max-lines-per-function': 'off',
       'max-nested-callbacks': 'error',
@@ -233,7 +233,13 @@ export default tseslint.config(
       'yoda': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'warn'
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-misused-promises': 'off',
+      '@typescript-eslint/unbound-method': 'off'
     },
   },
 );
