@@ -20,7 +20,8 @@
     "migration:generate": "npx ts-node -P ./tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d src/utils/database/app-data-source.ts migrations/migration",
     "migration:create": "npx ts-node -P ./tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create -d src/utils/database/app-data-source.ts migrations/migration",
     "migration:run": "npx ts-node -P ./tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/utils/database/app-data-source.ts",
-    "migration:revert": "npx ts-node -P ./tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert -d src/utils/database/app-data-source.ts"
+    "migration:revert": "npx ts-node -P ./tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert -d src/utils/database/app-data-source.ts",
+    "start:docker": "npm run migration:run && npm run start:prod"
   },
   "dependencies": {
     "@keyv/redis": "^4.3.2",

@@ -1,0 +1,9 @@
+/dist
+/node_modules
+/volumes
+/.git
+/.idea
+README.MD
+.gitignore
+.prettierrc
+docker-compose.yml
