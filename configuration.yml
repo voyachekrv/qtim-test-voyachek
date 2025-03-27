@@ -13,6 +13,14 @@ database:
   migrations-run: false
   logging: true
 
+cache:
+  host: 'localhost'
+  port: 6379
+  username: 'default'
+  password: 'admin'
+  database: 0
+  ttl: 6000
+
 security:
   user:
     salt-rounds: 10
