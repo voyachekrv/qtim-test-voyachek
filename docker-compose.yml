@@ -29,6 +29,22 @@ services:
     networks:
       - qtim-network
 
+  app:
+    container_name: app.qtim
+    hostname: app.qtim
+    depends_on:
+      - postgres
+      - redis
+    build:
+      context: '.'
+      dockerfile: './Dockerfile'
+    ports:
+      - '13000:3000'
+    expose:
+      - '13000'
+    networks:
+      - qtim-network
+
 networks:
   qtim-network:
     name: 'net.qtim'

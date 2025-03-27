@@ -3,7 +3,7 @@ http:
   prefix: 'api'
 
 database:
-  host: 'localhost'
+  host: 'postgres.qtim'
   port: 5432
   username: 'postgres'
   password: 'postgres'
@@ -14,7 +14,7 @@ database:
   logging: true
 
 cache:
-  host: 'localhost'
+  host: 'redis.qtim'
   port: 6379
   username: 'default'
   password: 'admin'
