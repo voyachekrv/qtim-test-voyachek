@@ -4,8 +4,10 @@ import { UserSignInDto, UserSignUpDto } from '../dto/user';
 import { AccessTokenDto } from '../dto/token';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ErrorDto } from '../../../exceptions';
+import { NoAuth } from '../decorators';
 
 @Controller('auth')
+@NoAuth()
 @ApiTags('AuthController - авторизация / регистрация пользователя')
 @ApiResponse({ type: ErrorDto, description: 'Некорректные входные данные', status: HttpStatus.BAD_REQUEST })
 @ApiResponse({ type: ErrorDto, description: 'Ошибка авторизации', status: HttpStatus.UNAUTHORIZED })

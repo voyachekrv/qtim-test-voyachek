@@ -4,7 +4,12 @@ import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { initSwagger } from './utils/swagger';
-import { BadRequestExceptionFilter, UnauthorizedExceptionFilter } from './exceptions';
+import {
+  BadRequestExceptionFilter,
+  ForbiddenExceptionFilter,
+  NotFoundExceptionFilter,
+  UnauthorizedExceptionFilter
+} from './exceptions';
 
 const DEFAULT_APP_PORT: number = 3000;
 
@@ -22,6 +27,8 @@ const bootstrap = async (): Promise<void> => {
 
   app.useGlobalFilters(new BadRequestExceptionFilter());
   app.useGlobalFilters(new UnauthorizedExceptionFilter());
+  app.useGlobalFilters(new NotFoundExceptionFilter());
+  app.useGlobalFilters(new ForbiddenExceptionFilter());
 
   await app.listen(port);
 };

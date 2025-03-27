@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { configConfiguration, databaseConfiguration } from './configurations';
+import { cacheConfiguration, configConfiguration, databaseConfiguration } from './configurations';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { ArticleModule } from './modules/article/article.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -15,7 +17,14 @@ import { UserModule } from './modules/user/user.module';
       inject: [ConfigService],
       useFactory: databaseConfiguration
     }),
-    UserModule
+    CacheModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: cacheConfiguration
+    }),
+    AuthModule,
+    ArticleModule
   ]
 })
 export class AppModule {}

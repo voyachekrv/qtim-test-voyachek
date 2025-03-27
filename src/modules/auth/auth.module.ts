@@ -8,13 +8,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { jwtConfiguration } from '../../configurations';
 import { AuthController } from './controllers';
 import { UserEntity } from './entities';
+import { JwtGuard } from './guards';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtStrategy } from './strategies';
 
 const INJECTED_ENTITIES = [UserEntity];
 const INJECTED_MAPPERS = [UserMapper];
 const INJECTED_SERVICES = [AuthService];
 
 /**
- * Модуль для работы с пользователями, их авторизацией и регистрацией
+ * Модуль для работы с авторизацией и регистрацией пользователей
  */
 @Module({
   imports: [
@@ -26,7 +29,15 @@ const INJECTED_SERVICES = [AuthService];
       useFactory: jwtConfiguration
     })
   ],
-  providers: [...INJECTED_MAPPERS, ...INJECTED_SERVICES],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard
+    },
+    JwtStrategy,
+    ...INJECTED_MAPPERS,
+    ...INJECTED_SERVICES
+  ],
   controllers: [AuthController]
 })
-export class UserModule {}
+export class AuthModule {}

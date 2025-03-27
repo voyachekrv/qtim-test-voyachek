@@ -59,7 +59,7 @@ describe('AuthService', () => {
       expect(result).toEqual({ token: 'jwt.token.example' });
     });
 
-    it('should throw UnauthorizedException, if user was not found', async () => {
+    it('should throw UnauthorizedException, if auth was not found', async () => {
       (userRepository.findOne as jest.Mock).mockResolvedValue(null);
 
       const dto = { username: 'notfound', password: 'secret' };
@@ -84,14 +84,14 @@ describe('AuthService', () => {
       await expect(authService.signUp(dto)).rejects.toThrow(BadRequestException);
     });
 
-    it('should throw BadRequestException, if user with this username is already exists', async () => {
+    it('should throw BadRequestException, if auth with this username is already exists', async () => {
       (userRepository.findOne as jest.Mock).mockResolvedValue(fakeUser);
       const dto = { username: 'test_user', password: 'secret', repeatPassword: 'secret' };
 
       await expect(authService.signUp(dto)).rejects.toThrow(BadRequestException);
     });
 
-    it('should create a new user and return AccessTokenDto', async () => {
+    it('should create a new auth and return AccessTokenDto', async () => {
       (userRepository.findOne as jest.Mock).mockResolvedValue(null);
 
       (userRepository.save as jest.Mock).mockImplementation(() =>
