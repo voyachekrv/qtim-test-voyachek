@@ -9,6 +9,7 @@ import { UserEntity } from '../../auth/entities';
 import { Page } from '../../../utils/pagination';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { ConfigService } from '@nestjs/config';
 
 const MESSAGE_AUTHOR_WAS_NOT_FOUND = 'Автор не найден, ID: ';
 const MESSAGE_ARTICLE_WAS_NOT_FOUND = 'Статья не найдена, ID: ';
@@ -26,7 +27,8 @@ export class ArticleService {
     private readonly userRepository: Repository<UserEntity>,
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
-    private readonly articleMapper: ArticleMapper
+    private readonly articleMapper: ArticleMapper,
+    private readonly config: ConfigService
   ) {}
 
   /**
@@ -60,7 +62,11 @@ export class ArticleService {
     }
 
     const foundArticle = this.articleMapper.toDto(entity);
-    await this.cacheManager.set(this.toCacheKey(foundArticle.id), foundArticle);
+    await this.cacheManager.set(
+      this.toCacheKey(foundArticle.id),
+      foundArticle,
+      this.config.getOrThrow<number>('cache.ttl')
+    );
 
     return foundArticle;
   }
@@ -79,7 +85,11 @@ export class ArticleService {
     const createdArticle = await this.articleRepository.save(newArticle);
     const createdArticleDto = this.articleMapper.toDto(createdArticle);
 
-    await this.cacheManager.set(this.toCacheKey(createdArticleDto.id), createdArticleDto, 6000);
+    await this.cacheManager.set(
+      this.toCacheKey(createdArticleDto.id),
+      createdArticleDto,
+      this.config.getOrThrow<number>('cache.ttl')
+    );
 
     return createdArticleDto;
   }
@@ -98,7 +108,11 @@ export class ArticleService {
     const updatedArticle = await this.articleRepository.save(article);
     const updatedArticleDto = this.articleMapper.toDto(updatedArticle);
 
-    await this.cacheManager.set(this.toCacheKey(updatedArticleDto.id), updatedArticleDto, 6000);
+    await this.cacheManager.set(
+      this.toCacheKey(updatedArticleDto.id),
+      updatedArticleDto,
+      this.config.getOrThrow<number>('cache.ttl')
+    );
 
     return updatedArticleDto;
   }
